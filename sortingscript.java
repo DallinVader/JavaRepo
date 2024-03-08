@@ -1,9 +1,11 @@
-//My name is Dallin Whitaker, this program is to sort a array to least to greatest.
+//Dallin Whitaker
+//for software and programming dev 1
+//instructor Mr Gross
+//this program is to sort a array to least to greatest.
 
 import java.lang.Math;
-
 public class sortingscript {
-
+    
     //Variables.
     int[] ListOfNum = {7, 7, 6, 8, 9, 2, 1, 2, 3};
     int[] arrayToSort={1,3,4,5,1,23,57,126,4,543,345,23,12,45,67,97};
