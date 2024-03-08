@@ -6,12 +6,13 @@
 import java.lang.Math;
 public class sortingscript {
     
-    //Variables.
-    int[] ListOfNum = {7, 7, 6, 8, 9, 2, 1, 2, 3};
-    int[] arrayToSort={1,3,4,5,1,23,57,126,4,543,345,23,12,45,67,97};
-
+    
     //Function that will run at the start of the program;
-    void main(){
+    public static void main(String[] args){
+        //Variables.
+        int[] ListOfNum = {7, 7, 6, 8, 9, 2, 1, 2, 3};
+        int[] arrayToSort={1,3,4,5,1,23,57,126,4,543,345,23,12,45,67,97};
+
         if(Math.round(Math.random()) == 0) {
             BubbleSort(ListOfNum);
         }
@@ -21,7 +22,7 @@ public class sortingscript {
     }
 
     //Function to sort the array.
-    void BubbleSort(int[] CurrentArray){
+    public static void BubbleSort(int[] CurrentArray){
         boolean SwapNum = true;
         while (SwapNum) {
             SwapNum = false;
@@ -41,16 +42,18 @@ public class sortingscript {
         }
     }
 
-    void SortIntArrayAssending(int[] TempArray, int SortedNum){
+    public static int[] SortIntArrayAssending(int[] TempArray, int SortedNum){
         if (TempArray[SortedNum] > TempArray[SortedNum + 1]) {
             int Temp = TempArray[SortedNum];
             TempArray[SortedNum] = TempArray[SortedNum + 1];
             TempArray[SortedNum + 1] = Temp;
         }
+
+        return TempArray;
     }
 
     //Prints a int[] array.
-    void PrintIntArray(int[] TempArray){
+    public static void PrintIntArray(int[] TempArray){
         for (int i = 0; i < TempArray.length; i++) {
             System.err.print(TempArray[i] + " ");
         }
