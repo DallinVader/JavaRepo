@@ -27,6 +27,7 @@ public class ObjectScript {
         //Object Variables.
         String ObjName;
         int[] Position = {0, 0};
+        int Age = (int) Math.round(Math.random() * 30);
         
         //Sets Object Variables when it is created.
         public SimpleObj(String Name, int XStartPos, int YStartPos){
@@ -93,6 +94,7 @@ public class ObjectScript {
         //Checks if all the horses have won and if not continues the race.
         if (HorsesThatWon.size() >= NumberOfHorses && !LeaderBoardCompleat) {
             Scanner scan = new Scanner(System.in);
+            System.err.println(HorsesThatWon.get(0).ObjName + " WON THE RACE! Horse age is " + HorsesThatWon.get(0).Age);
             for (int i = 0; i < HorsesThatWon.size(); i++) {
                 System.err.println(i + 1 + ": " + HorsesThatWon.get(i).ObjName);
             }
