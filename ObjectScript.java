@@ -111,7 +111,7 @@ public class ObjectScript {
         }
         else if(!LeaderBoardCompleat){
             //Clears the terminal and then foreach horse tells you how far they are in the race.
-            //NOTE. Breaks the race if you have more than 40 horses racing because the ClearTerminal() has issus with clearing large amounts of the terminal.
+            //NOTE. Breaks the race if you have more than 46 horses racing because the ClearTerminal() has issus with clearing large amounts of the terminal.
             ClearTerminal();
             for (int i = 0; i < ObjList.size(); i++) {
                 System.err.print(i + 1);
@@ -121,7 +121,7 @@ public class ObjectScript {
                 System.err.print(">");
                 System.err.println("");
                 if (ObjList.get(i).Position[0] <= 50) {
-                    ObjList.get(i).Position[0] += (int) Math.round(Math.random() * 1);
+                    ObjList.get(i).Position[0] += 1 + (int) Math.round(Math.random() * 1);
                 }
                 else{
                     if (!HorsesThatWon.contains(ObjList.get(i))) {
