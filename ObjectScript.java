@@ -23,7 +23,7 @@ public class ObjectScript {
     public static boolean LeaderBoardCompleat = false;
 
     //Class for a simple object also know as the horse.
-    public static class SimpleObj {
+    public static class SimpleObj implements Comparable<SimpleObj> {
         //Object Variables.
         String ObjName;
         int[] Position = {0, 0};
@@ -49,11 +49,15 @@ public class ObjectScript {
             Position[1] = NewYAxis;
         }
 
-        public Class<?> GetSubClass(SimpleObj obj, Class<?> ClassName){
-            if (ClassName.isInstance(obj)) {
-                RaceHorseClass temp =  (ClassName) obj;
-                return temp;
+        public RaceHorseClass GetRaceHorseClass(){
+            if (this instanceof RaceHorseClass) {
+                return (RaceHorseClass) this;
             }
+            return null;
+        }
+
+        public int CompareObj(SimpleObj CompObj){
+            return 0; 
         }
     }
 
@@ -91,7 +95,7 @@ public class ObjectScript {
     //Function that runs at the start.
     public static void main(String[] args){
         SimpleObj temp = new RaceHorseClass("A",0, 0, "AA");
-        System.err.println(temp.ObjName + " " + temp.RaceHorseClass.RaceName);
+        System.err.println(temp.ObjName + " " + ((RaceHorseClass) temp).RaceName);
 
         //Starts the Horse Race.
         GameStart();
