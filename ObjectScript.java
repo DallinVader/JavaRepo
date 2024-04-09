@@ -56,8 +56,8 @@ public class ObjectScript {
             return null;
         }
 
-        public int CompareObj(SimpleObj CompObj){
-            return 0; 
+        public int compareTo(SimpleObj CompObj){
+            return Integer.compare(this.Age, CompObj.Age);
         }
     }
 
