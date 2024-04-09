@@ -48,10 +48,51 @@ public class ObjectScript {
             Position[0] = NewXAxis;
             Position[1] = NewYAxis;
         }
+
+        public Class<?> GetSubClass(SimpleObj obj, Class<?> ClassName){
+            if (ClassName.isInstance(obj)) {
+                RaceHorseClass temp =  (ClassName) obj;
+                return temp;
+            }
+        }
+    }
+
+    public static class RaceHorseClass extends SimpleObj {
+        int RacesWon = 0;
+        float Speed;
+        String RaceName;
+        
+        public RaceHorseClass(String ObjName, int xStartPos, int yStartPos, String RaceingName){
+            super(ObjName, xStartPos, yStartPos);
+            this.RaceName = RaceingName;
+            this.Speed = (int) Math.round(Math.random() * 2) + 1;
+        }
+
+        public void WonRace(){
+            this.RacesWon += 1;
+        }
+    }
+
+    public static class WorkHorseClass extends SimpleObj {
+        float Strength;
+        String HorseName;
+        
+        public WorkHorseClass(String ObjName, int xStartPos, int yStartPos, String WorkHorseName){
+            super(ObjName, xStartPos, yStartPos);
+            this.HorseName = WorkHorseName;
+            this.Strength = (int) Math.round(Math.random() * 4);
+        }
+
+        public void HorseRest(){
+            this.Strength += 1;
+        }
     }
 
     //Function that runs at the start.
     public static void main(String[] args){
+        SimpleObj temp = new RaceHorseClass("A",0, 0, "AA");
+        System.err.println(temp.ObjName + " " + temp.RaceHorseClass.RaceName);
+
         //Starts the Horse Race.
         GameStart();
     }
@@ -59,7 +100,7 @@ public class ObjectScript {
     //Function that is used to start the race.
     public static void GameStart(){
         Scanner scan = new Scanner(System.in);
-        
+                                
         //Cancels and resets the timer when starting or restarting.
         timer.cancel();
         timer = new Timer();
@@ -69,6 +110,7 @@ public class ObjectScript {
         //Gets number of horses from terminal.
         NumberOfHorses = Integer.parseInt(scan.nextLine());
         CreateObjs(NumberOfHorses);
+
 
         //Prints all of the horses that were created.
         for (SimpleObj obj : ObjList) {
