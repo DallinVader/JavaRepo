@@ -5,7 +5,7 @@ public class main {
         String IsEven = "false";
         int TotalSum = 0;
         for (int i = 0; i <= LengthCount; i++) {
-            //Sets IsEven var as a odd number unless it has a remainder of 0.
+            // Sets IsEven var as a odd number unless it has a remainder of 0.
             IsEven = "Is a odd number";
             if (i % 2 == 0) {
                 IsEven = "Is a even number";
@@ -13,6 +13,6 @@ public class main {
             TotalSum += i;
             System.err.println(i + " " + IsEven);
         }
-        System.err.println("The total sum is " + TotalSum );
+        System.err.println("The total sum is " + TotalSum);
     }
 }
