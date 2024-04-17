@@ -1,17 +1,17 @@
 package JavaGame;
 
 import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Time;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.*;
-
-public class Game extends JPanel implements ActionListener {
+public class Game extends JPanel implements ActionListener, KeyListener {
 
     JFrame frame;
 
@@ -23,11 +23,14 @@ public class Game extends JPanel implements ActionListener {
     public Image RomanChariot;
     public Image Grass;
 
+    public int WorldXpos = 0;
+    public int WorldYpos = 0;
+
     int ScreenWidth = 0;
     int ScreenHeight = 0;
 
     int GameSize = 50;
-    int NumberOfHorse = 7;
+    int NumberOfHorse = 50;
 
     JLabel TimerText;
     int TimeCallAmount = 0;
@@ -35,6 +38,7 @@ public class Game extends JPanel implements ActionListener {
 
     Game(JFrame MainFrame) {
         frame = MainFrame;
+        frame.addKeyListener(this);
 
         ScreenWidth = frame.getWidth();
         ScreenHeight = frame.getHeight();
@@ -54,15 +58,71 @@ public class Game extends JPanel implements ActionListener {
         add(TimerText);
     }
 
+    TextField KeyTextaa;
+
     void Start() {
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < NumberOfHorse; i++) {
             Horse obja = new Horse("Horse" + i, 5, 2, 0, GameSize * i);
             obja.Xpos += i;
             System.err.println(((GameObjects) obja).Xpos);
         }
     }
 
+    public void keyTyped(KeyEvent e) {
+    }
+
+    Boolean Left = false, Right = false, Up = false, Down = false;
+
+    public void keyPressed(KeyEvent e) {
+
+        System.err.println(Left + " " + Right + " " + Up + " " + Down);
+
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            Left = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D) {
+            Right = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_W) {
+            Up = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_S) {
+            Down = true;
+        }
+
+    }
+
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            Left = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D) {
+            Right = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_W) {
+            Up = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_S) {
+            Down = false;
+        }
+    }
+
     void Update() {
+
+        if (Up) {
+            WorldYpos += 5;
+        }
+
+        if (Down) {
+            WorldYpos -= 5;
+        }
+        if (Right) {
+            WorldXpos -= 5;
+        }
+        if (Left) {
+            WorldXpos += 5;
+        }
+
         TimeInSeconds = TimeCallAmount / 31.25f;
         TimeCallAmount++;
 
@@ -80,20 +140,24 @@ public class Game extends JPanel implements ActionListener {
         RomanChariot = new ImageIcon(getClass().getResource("Images/RomanChariot.png")).getImage();
         Grass = new ImageIcon(getClass().getResource("Images/Grass.png")).getImage();
 
-        for (int i = 0; i < ScreenWidth; i += Grass.getWidth(TimerText)) {
-            for (int y = 0; y < ScreenHeight; y += Grass.getHeight(TimerText)) {
-                g.drawImage(Grass, i, y, null);
+        int NumOfGrassObjs = 0;
+        for (int i = 0; i < (ScreenWidth - WorldXpos); i += Grass.getWidth(TimerText)) {
+            if (i >= -WorldXpos - Grass.getWidth(TimerText)) {
+                int h = Grass.getHeight(TimerText);
+                for (int y = 0; y < ScreenHeight - WorldYpos + h; y += h) {
+                    g.drawImage(Grass, i + WorldXpos, y + WorldYpos, null);
+                    NumOfGrassObjs++;
+                }
             }
-            System.err.println(i / Grass.getWidth(TimerText));
         }
 
         for (int a = 0; a < NumberOfHorse + 1; a++) {
-            g.drawLine(0, GameSize * a, ScreenWidth, GameSize * a);
+            g.drawLine(0, (GameSize * a) + WorldYpos, ScreenWidth, (GameSize * a) + WorldYpos);
         }
 
         for (int i = 0; i < AllGameObjects.size(); i++) {
             Horse TempHorse = (Horse) AllGameObjects.get(i);
-            g.drawImage(RomanChariot, TempHorse.Xpos, GameSize * i, null);
+            g.drawImage(RomanChariot, TempHorse.Xpos + WorldXpos, (GameSize * i) + WorldYpos, null);
         }
 
     }
@@ -152,7 +216,7 @@ public class Game extends JPanel implements ActionListener {
             if (CoolDown <= TimeInSeconds) {
                 CoolDown += 0.75f;
                 this.Speed += Math.random() * this.SpeedAdjustments - (this.SpeedAdjustments / 2);
-                this.Speed = Math.clamp(Speed, 2, 5f);
+                this.Speed = Math.clamp(Speed, 3, 5f);
             }
         }
     }
