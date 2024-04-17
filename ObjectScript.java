@@ -12,7 +12,7 @@ import java.util.TimerTask;
 
 public class ObjectScript {
 
-    //Variables.
+    // Variables.
     public static int NumberOfHorses;
     public static int HorseRaceDistance = 20;
 
@@ -22,41 +22,41 @@ public class ObjectScript {
     public static Timer timer = new Timer();
     public static boolean LeaderBoardCompleat = false;
 
-    //Class for a simple object also know as the horse.
+    // Class for a simple object also know as the horse.
     public static class SimpleObj implements Comparable<SimpleObj> {
-        //Object Variables.
+        // Object Variables.
         String ObjName;
-        int[] Position = {0, 0};
+        int[] Position = { 0, 0 };
         int Age = (int) Math.round(Math.random() * 30);
-        
-        //Sets Object Variables when it is created.
-        public SimpleObj(String Name, int XStartPos, int YStartPos){
+
+        // Sets Object Variables when it is created.
+        public SimpleObj(String Name, int XStartPos, int YStartPos) {
             ObjName = Name;
 
             Position[0] = XStartPos;
             Position[1] = YStartPos;
         }
 
-        //Returns all data from the object to a string.
-        public String AllDataToString(){
+        // Returns all data from the object to a string.
+        public String AllDataToString() {
             String TempString = ObjName + " X" + Position[0] + " Y" + Position[1];
             return TempString;
         }
 
-        //Changes the X and Y position variables.
-        public void ChangePos(int NewXAxis, int NewYAxis){
+        // Changes the X and Y position variables.
+        public void ChangePos(int NewXAxis, int NewYAxis) {
             Position[0] = NewXAxis;
             Position[1] = NewYAxis;
         }
 
-        public RaceHorseClass GetRaceHorseClass(){
+        public RaceHorseClass GetRaceHorseClass() {
             if (this instanceof RaceHorseClass) {
                 return (RaceHorseClass) this;
             }
             return null;
         }
 
-        public int compareTo(SimpleObj CompObj){
+        public int compareTo(SimpleObj CompObj) {
             return Integer.compare(this.Age, CompObj.Age);
         }
     }
@@ -65,14 +65,14 @@ public class ObjectScript {
         int RacesWon = 0;
         float Speed;
         String RaceName;
-        
-        public RaceHorseClass(String ObjName, int xStartPos, int yStartPos, String RaceingName){
+
+        public RaceHorseClass(String ObjName, int xStartPos, int yStartPos, String RaceingName) {
             super(ObjName, xStartPos, yStartPos);
             this.RaceName = RaceingName;
             this.Speed = (int) Math.round(Math.random() * 2) + 1;
         }
 
-        public void WonRace(){
+        public void WonRace() {
             this.RacesWon += 1;
         }
     }
@@ -80,96 +80,100 @@ public class ObjectScript {
     public static class WorkHorseClass extends SimpleObj {
         float Strength;
         String HorseName;
-        
-        public WorkHorseClass(String ObjName, int xStartPos, int yStartPos, String WorkHorseName){
+
+        public WorkHorseClass(String ObjName, int xStartPos, int yStartPos, String WorkHorseName) {
             super(ObjName, xStartPos, yStartPos);
             this.HorseName = WorkHorseName;
             this.Strength = (int) Math.round(Math.random() * 4);
         }
 
-        public void HorseRest(){
+        public void HorseRest() {
             this.Strength += 1;
         }
     }
 
-    //Function that runs at the start.
-    public static void main(String[] args){
-        SimpleObj temp = new RaceHorseClass("A",0, 0, "AA");
+    // Function that runs at the start.
+    public static void main(String[] args) {
+        SimpleObj temp = new RaceHorseClass("A", 0, 0, "AA");
         System.err.println(temp.ObjName + " " + ((RaceHorseClass) temp).RaceName);
 
-        //Starts the Horse Race.
+        // Starts the Horse Race.
         GameStart();
     }
 
-    //Function that is used to start the race.
-    public static void GameStart(){
+    // Function that is used to start the race.
+    public static void GameStart() {
         Scanner scan = new Scanner(System.in);
-                                
-        //Cancels and resets the timer when starting or restarting.
+
+        // Cancels and resets the timer when starting or restarting.
         timer.cancel();
         timer = new Timer();
 
         System.err.println("Enter the amount of horses you would like to race?");
 
-        //Gets number of horses from terminal.
+        // Gets number of horses from terminal.
         NumberOfHorses = Integer.parseInt(scan.nextLine());
         CreateObjs(NumberOfHorses);
 
-
-        //Prints all of the horses that were created.
+        // Prints all of the horses that were created.
         for (SimpleObj obj : ObjList) {
 
             System.err.println(obj.ObjName);
         }
-        
+
         System.err.println("");
         System.err.println("Enter Start to start the race");
-        //Starts the race when you enter Start.
-        if (scan.nextLine().equals("Start")){
+        // Starts the race when you enter Start.
+        if (scan.nextLine().equals("Start")) {
             LeaderBoardCompleat = false;
             ClearTerminal();
             System.err.println("Starting race!");
-            //Starts a loop for RaceHorses() function.
-            timer.scheduleAtFixedRate(new TimerTask(){public void run(){RaceHorses();}}, 150, 150);
-            
+            // Starts a loop for RaceHorses() function.
+            timer.scheduleAtFixedRate(new TimerTask() {
+                public void run() {
+                    RaceHorses();
+                }
+            }, 150, 150);
+
         }
     }
 
-    //Races the horses.
-    public static void RaceHorses(){
-        //Checks if all the horses have won and if not continues the race.
+    // Races the horses.
+    public static void RaceHorses() {
+        // Checks if all the horses have won and if not continues the race.
         if (HorsesThatWon.size() >= NumberOfHorses && !LeaderBoardCompleat) {
             Scanner scan = new Scanner(System.in);
-            System.err.println(HorsesThatWon.get(0).ObjName + " WON THE RACE! Horses age is " + HorsesThatWon.get(0).Age);
+            System.err
+                    .println(HorsesThatWon.get(0).ObjName + " WON THE RACE! Horses age is " + HorsesThatWon.get(0).Age);
             for (int i = 0; i < HorsesThatWon.size(); i++) {
                 System.err.println(i + 1 + ": " + HorsesThatWon.get(i).ObjName);
             }
             LeaderBoardCompleat = true;
-            //Restarts the race.
+            // Restarts the race.
             System.err.println("Enter Restart to restart the race");
-            if (scan.nextLine().equals("Restart")){
+            if (scan.nextLine().equals("Restart")) {
                 ClearTerminal();
                 NumberOfHorses = 0;
                 ObjList = new ArrayList<>();
                 HorsesThatWon = new ArrayList<>();
                 GameStart();
             }
-        }
-        else if(!LeaderBoardCompleat){
-            //Clears the terminal and then foreach horse tells you how far they are in the race.
-            //NOTE. Breaks the race if you have more than 46 horses racing because the ClearTerminal() has issus with clearing large amounts of the terminal.
+        } else if (!LeaderBoardCompleat) {
+            // Clears the terminal and then foreach horse tells you how far they are in the
+            // race.
+            // NOTE. Breaks the race if you have more than 46 horses racing because the
+            // ClearTerminal() has issus with clearing large amounts of the terminal.
             ClearTerminal();
             for (int i = 0; i < ObjList.size(); i++) {
                 System.err.print(i + 1);
                 for (int j = 0; j < ObjList.get(i).Position[0]; j++) {
-                    System.err.print("-");
+                    System.err.print("- ");
                 }
                 System.err.print(">");
                 System.err.println("");
                 if (ObjList.get(i).Position[0] <= 50) {
                     ObjList.get(i).Position[0] += 1 + (int) Math.round(Math.random() * 1);
-                }
-                else{
+                } else {
                     if (!HorsesThatWon.contains(ObjList.get(i))) {
                         HorsesThatWon.add(ObjList.get(i));
                     }
@@ -178,22 +182,22 @@ public class ObjectScript {
         }
     }
 
-    //Creates the objects with unique names.
-    public static void CreateObjs(int NumberOfObjects){
+    // Creates the objects with unique names.
+    public static void CreateObjs(int NumberOfObjects) {
         for (int i = 0; i < NumberOfObjects; i++) {
             SimpleObj Temp = new SimpleObj("Horse" + (i + 1), 0, 0);
             ObjList.add(Temp);
         }
     }
 
-    //Clears the terminal.
-    public static void ClearTerminal(){
+    // Clears the terminal.
+    public static void ClearTerminal() {
         System.out.println("\033[H\033[2J");
         System.out.flush();
     }
 
-    //Converts a int to a string.
-    public static String IntToString(int IntNumber){
+    // Converts a int to a string.
+    public static String IntToString(int IntNumber) {
         String Temp = IntNumber + "";
         return Temp;
     }
