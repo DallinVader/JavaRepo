@@ -15,8 +15,8 @@ public class App extends JFrame {
         JFrame frame = new JFrame("Rome Game");
         frame.getContentPane().setBackground(new Color(38, 139, 7));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
         frame.setVisible(true);
+        frame.pack();
         frame.setSize(1600, 900);
         frame.setLocationRelativeTo(null);
 
