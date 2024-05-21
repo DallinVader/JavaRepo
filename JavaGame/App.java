@@ -19,8 +19,8 @@ public class App extends JFrame {
         frame.pack();
         frame.setSize(1600, 900);
         frame.setLocationRelativeTo(null);
-
         Game game = new Game(frame);
         frame.add(game);
+
     }
 }
